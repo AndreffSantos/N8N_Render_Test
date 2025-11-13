@@ -21,38 +21,32 @@ DATA_STORE = []
 # ENDPOINT DE INGESTÃO (WEBHOOK)
 # =================================================================
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/', methods=['POST'])
 def handle_webhook():
     """
-    Recebe requisições POST do webhook, extrai o JSON e armazena os dados.
+    Recebe requisições POST, imprime o conteúdo e retorna sucesso.
     """
     try:
-        # Tenta obter os dados em formato JSON
+        # Tenta obter o corpo da requisição como JSON
         data = request.json
+        
+        # Se não for JSON, tenta pegar o corpo como texto
         if data is None:
-            # Caso a requisição não tenha Content-Type: application/json
-            return jsonify({"status": "error", "message": "Nenhum dado JSON encontrado no corpo da requisição."}), 400
-
-        # Adiciona metadados de ingestão
-        ingestion_record = {
-            "timestamp": datetime.now().isoformat(),
-            "source_ip": request.remote_addr,
-            "payload": data
-        }
-
-        # Armazena os dados no DATA_STORE
-        DATA_STORE.append(ingestion_record)
-
-        logging.info(f"Dados do webhook recebidos e armazenados: {json.dumps(data)}")
-
-        return jsonify({
-            "status": "success", 
-            "message": "Dados do webhook processados com sucesso.",
-            "record_id": len(DATA_STORE)
-        }), 200
+            data = request.get_data(as_text=True)
+            logging.info(f"Webhook recebido (Formato não JSON, Texto Bruto): {data[:100]}...")
+            
+        else:
+            # Se for JSON, imprime de forma formatada
+            logging.info("--- DADOS DO WEBHOOK RECEBIDOS ---")
+            logging.info(f"Origem IP: {request.remote_addr}")
+            logging.info(f"Conteúdo: \n{json.dumps(data, indent=4)}")
+            logging.info("----------------------------------")
+            
+        # Resposta de sucesso (status 200) para o sistema de origem
+        return jsonify({"status": "success", "message": "Dados recebidos e processados."}), 200
 
     except Exception as e:
-        # Tratamento de erros gerais
+        # Tratamento de erro caso algo dê errado no processamento
         logging.error(f"Erro ao processar webhook: {e}")
         return jsonify({"status": "error", "message": f"Erro interno do servidor: {str(e)}"}), 500
 
