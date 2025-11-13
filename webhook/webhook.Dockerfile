@@ -6,13 +6,13 @@ WORKDIR /app
 
 # Copia e instala as dependências
 # O arquivo 'requirements.txt' precisa estar no mesmo diretório
-COPY pyproject.toml .
+COPY webhook/pyproject.toml .
 RUN uv sync
 # RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia o código da sua aplicação Flask
 # O arquivo 'webhook_api.py' precisa estar no mesmo diretório
-COPY main.py .
+COPY webhook/main.py .
 
 # O Flask roda na porta 5000 por padrão, mas o Render injeta a porta 
 # através da variável de ambiente $PORT. O código em 'webhook_api.py' 
