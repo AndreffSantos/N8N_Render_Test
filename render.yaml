@@ -61,8 +61,6 @@ services:
     # Especifica o Dockerfile que criamos para este serviço
     dockerfilePath: webhook/webhook.Dockerfile
     
-    # O comando de inicialização
-    startCommand: uv run main.py
 
     # Variáveis de ambiente
     envVars:
