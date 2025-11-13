@@ -50,7 +50,7 @@ services:
       - key: DB_POSTGRESDB_USER
         fromDatabase:
           name: n8n-db
-          property: user]
+          property: user
   # Novo serviço para o webhook.
   - type: web
     plan: free
