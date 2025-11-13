@@ -50,7 +50,25 @@ services:
       - key: DB_POSTGRESDB_USER
         fromDatabase:
           name: n8n-db
-          property: user
+          property: user]
+  # Novo serviço para o webhook.
+  - type: web
+    plan: free
+    # Usamos o runtime 'docker' para construir a imagem a partir do Dockerfile.webhook
+    runtime: docker
+    name: webhook-api-service
+    
+    # Especifica o Dockerfile que criamos para este serviço
+    dockerfilePath: webhook/webhook.Dockerfile
+    
+    # O comando de inicialização
+    startCommand: uv run main.py
+
+    # Variáveis de ambiente
+    envVars:
+      # A porta padrão do Flask é 5000, o Render mapeia automaticamente.
+      - key: PORT
+        value: 5000
 
 databases:
   - name: n8n-db
