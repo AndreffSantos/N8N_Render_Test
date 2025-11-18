@@ -21,7 +21,7 @@ DATA_STORE = []
 # ENDPOINT DE INGESTÃO (WEBHOOK)
 # =================================================================
 
-@app.route('/', methods=['POST'])
+@app.route('/webhook-test/51942fbb-ca0e-4ec4-9423-5fcc7d3c4281/webhook', methods=['POST'])
 def handle_webhook():
     """
     Recebe requisições POST, imprime o conteúdo e retorna sucesso.
