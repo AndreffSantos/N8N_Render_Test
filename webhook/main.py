@@ -43,7 +43,7 @@ def handle_webhook():
             logging.info("----------------------------------")
             
         # Resposta de sucesso (status 200) para o sistema de origem
-        return jsonify(data), 200
+        return jsonify({"status": "acepted", "content": data}), 200
 
     except Exception as e:
         # Tratamento de erro caso algo dê errado no processamento
@@ -54,7 +54,7 @@ def handle_webhook():
 # ENDPOINT DE CONSULTA PÚBLICA
 # =================================================================
 
-@app.route('/data', methods=['GET'])
+@app.route('/test', methods=['GET'])
 def get_all_data():
     """
     Endpoint público para consultar todos os dados armazenados.
