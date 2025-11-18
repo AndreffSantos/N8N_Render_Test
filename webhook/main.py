@@ -40,10 +40,10 @@ def handle_webhook():
             logging.info("--- DADOS DO WEBHOOK RECEBIDOS ---")
             logging.info(f"Origem IP: {request.remote_addr}")
             logging.info(f"Conteúdo: \n{json.dumps(data, indent=4)}")
-            logging.info("----------------------------------")
-            
+            logging.info("----------------------------------")        
+    
         # Resposta de sucesso (status 200) para o sistema de origem
-        return jsonify({"status": "success", "message": "Dados recebidos e processados.", "content": request.data}), 200
+        return jsonify({"status": "success", "message": "Dados recebidos e processados.", "content": request.json}), 200
 
     except Exception as e:
         # Tratamento de erro caso algo dê errado no processamento
