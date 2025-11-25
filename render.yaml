@@ -53,18 +53,20 @@ services:
           property: user
       - key: N8N_PROTOCOL
         value: https
-  - type: web
-    plan: free
-    runtime: image
-    name: ngrok-tunnel
-    image:
-      url: docker.io/ngrok/ngrok:latest
-    envVars:
-      - key: NGROK_AUTHTOKEN
-        # Replace with your own ngrok authtoken
-        value: 35wJ7oB93ajCpMNYM0ZWBYJ2b0R_6YCwrxohr6BzYWudeL4cg
-    startCommand: >
-      http n8n-service:5678 --host-header=n8n.your-domain.com
+
+  # - type: web
+  #   plan: free
+  #   runtime: image
+  #   name: ngrok-tunnel
+  #   image:
+  #     url: docker.io/ngrok/ngrok:latest
+  #   envVars:
+  #     - key: NGROK_AUTHTOKEN
+  #       # Replace with your own ngrok authtoken
+  #       value: 35wJ7oB93ajCpMNYM0ZWBYJ2b0R_6YCwrxohr6BzYWudeL4cg
+  #   startCommand: >
+  #     http n8n-service:5678 --host-header=n8n.your-domain.com
+  
 databases:
   - name: n8n-db
     plan: free
